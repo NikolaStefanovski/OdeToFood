@@ -18,16 +18,19 @@ namespace OdeToFoodFromScratch.Pages.Restaurants
         public string Message { get; set; }
         public IEnumerable<Restaurant> Restaurants { get; set; }
 
+        [BindProperty]
+        public string SearchTerm { get; set; }
+
         public ListModel(IConfiguration configuration, IRestaurantData restaurantData)
         {
             this.configuration = configuration;
             this.restaurantData = restaurantData;
         }
 
-        public void OnGet()
+        public void OnGet(string searchTerm)
         {
             Message = configuration["Message"];
-            Restaurants = restaurantData.GetAll();
+            Restaurants = restaurantData.GetRestaurantsByName(searchTerm);
         }
     }
 }
